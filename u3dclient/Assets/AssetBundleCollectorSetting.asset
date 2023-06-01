@@ -12,8 +12,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185f6993d5150494d98da50e26cb1c25, type: 3}
   m_Name: AssetBundleCollectorSetting
   m_EditorClassIdentifier: 
-  ShowPackageView: 0
+  ShowPackageView: 1
   EnableAddressable: 1
   UniqueBundleName: 0
   ShowEditorAlias: 0
-  Packages: []
+  Packages:
+  - PackageName: Main
+    PackageDesc: "\u4E3B\u5206\u5305\uFF0C\u70ED\u66F4\u4EE3\u7801\u5FC5\u987B\u5728\u8FD9\u4E2A\u5305\u5185"
+    Groups:
+    - GroupName: Config
+      GroupDesc: "\u914D\u7F6E"
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/Res/Main/Config
+        CollectorGUID: 746ce6ef5f7fb1e4590b7836ba03b1a6
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+    - GroupName: Scene
+      GroupDesc: "\u573A\u666F\u8D44\u6E90"
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/Res/Main/Scenes
+        CollectorGUID: dca4320ceceaa2046b4c1c12dd0aed00
+        CollectorType: 0
+        AddressRuleName: AddressByFilePath
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+  - PackageName: AddOn1
+    PackageDesc: "\u5206\u53051"
+    Groups:
+    - GroupName: Default Group
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors: []
