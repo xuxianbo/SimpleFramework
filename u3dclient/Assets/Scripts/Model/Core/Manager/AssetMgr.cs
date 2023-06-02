@@ -322,8 +322,11 @@ namespace Core
             return handle.AssetObject as T;
         }
 
+
         public static async Task<Object> LoadAsync(string path, Type type)
-            => await LoadAsync(path, Updater.MainPackageName, type);
+        {
+            return await LoadAsync(path, Updater.MainPackageName, type);
+        }
 
         public static async Task<Object> LoadAsync(string path, string package, Type type)
         {

@@ -1,0 +1,162 @@
+syntax = "proto3";
+
+
+option go_package = "/protobuild";
+
+//响应用户信息
+message RstUserInfo {
+    string userId=1;//用户id唯一标识
+    string head=2;//头像
+    string name=3;//名字
+    uint32 gold=4;//金币
+    uint32 diamond=5;//砖石
+    uint32 position=6;//位置 0 1 2 3
+    float angle=7;//炮塔角度
+    uint32 towerId=8;//武器id
+    uint32 curMultiplier=9;//当前倍率
+    uint32 maxMultiplier=10;//最大倍率
+}
+
+//响应心跳
+message RstHeartBeat{
+    uint64 time=1;//服务器时间
+}
+
+//开始游戏请求数据
+message ReqStartGame{
+    string roomNumber=1;//房间号
+    uint32 roomConfigId=2;//房间配置id
+}
+
+//开始游戏响应数据
+message RstStartGame{
+    string roomNumber=1;//房间号
+    uint32 roomConfigId=2;//房间配置id
+    repeated RstUserInfo roomUsers = 3;//房间里的用户
+    repeated FishData roomFish = 4;//房间里的鱼
+}
+//鱼的位置信息
+message Position{
+    float x = 1;
+    float y = 2;
+}
+
+//鱼信息
+message FishData {
+    uint32 fishId = 1;//唯一id
+    uint32 configId = 2;//配置id
+    Position startPos = 3;//起始位置 (x:700,-700 固定) y (-350,350 内随机)
+    uint32 randomPath = 4;//随机的路线
+    uint64 moveTime = 5;//创建时间
+    uint64 maxMoveTime = 6;//最大移动时间
+}
+
+//广播创建鱼
+message BroadFishData{
+    repeated FishData FishDatas=1;
+}
+
+//炮塔角度改变信息
+message ReqAngleData {
+    float angle=1;//角度
+}
+
+//广播炮塔角度改变信息
+message BroadAngleData {
+    string userId=1;//玩家id
+    float angle=2;//角度
+}
+
+//推出房间数据
+message ReqExitData{
+    bool disconnectExit = 1;//是否断开连接退出
+}
+
+//广播玩家退出房间消息
+message BroadExitData {
+    string userId=1;//玩家退出房间
+}
+
+message ReqAttackData{
+    uint32 fishId =1;//目标鱼的id，如果有
+    uint64 bulletId=2;//子弹id
+}
+
+//广播玩家发送子弹消息
+message BroadAttackData {
+    string userId = 1;//玩家id
+    uint32 gold=2;//金币
+    uint32 fishId = 3;//这个玩家锁定的目标鱼
+}
+
+//客户端向服务器发送攻击到鱼了
+message ReqHitFishData{
+    uint32 fishId = 1;//服务端的唯一id
+    uint64 bulletId=2;//子弹id
+}
+
+//服务器向所有玩家广播某个鱼死了
+message BroadFishDeathData{
+    string userId=1;//用户id唯一标识
+    uint32 fishId = 2;//鱼的唯一id
+    uint32 gold = 3;//奖励的金币
+    uint32 diamond = 4;//奖励的钻石 如果有的话
+    //后期可能加点什么死亡之后的特殊效果上去
+}
+
+message ReqUsePropData{
+    uint32 propId = 1;//道具id
+}
+
+message RstUsePropData{
+    uint32 code = 1;//使用道具结果
+    uint32 propId = 2;//道具id
+}
+
+message ReqMultiplierData{
+    uint32 multiplier = 1;//改变到多少倍
+}
+
+message BroadMultiplierData{
+    string userId = 1;//用户id
+    uint32 multiplier = 2;//倍数
+}
+//清除鱼数据
+message ReqClearFishData {
+    repeated uint32 fishId = 1;//鱼的唯一id
+}
+//请求广播鱼的随机点
+message RandomFishPos{
+    uint32 fishId = 1;
+    repeated Position pos = 2;
+}
+//单个公告的内容
+message NoticeData{
+    string title = 1;
+    string content = 2;
+    uint32 sort = 3;
+}
+//公告
+message RstNoticeData{
+    repeated NoticeData datas = 1;
+}
+//跑马灯数据
+message MarqueeData{
+    uint32 type = 1;//1：纯文本,2：头像
+    string name = 2;//玩家名字
+    string head = 3;//玩家头像
+    uint32 multiplier = 4;//炮倍
+    uint32 fishConfigId = 5;//鱼的id
+    uint32 gold = 6;//金币数量
+}
+//广播跑马灯
+message BroadMarqueeData{
+    uint32 type = 1;//提示类型 1：跑马灯 2:捕获大鱼提示
+    MarqueeData data = 2;//跑马灯带上的数据
+    string content = 3;//公告信息，比如停服什么的
+}
+
+//响应用户子弹
+message RstBullet{
+    repeated uint64 bulletIds  = 1;
+}

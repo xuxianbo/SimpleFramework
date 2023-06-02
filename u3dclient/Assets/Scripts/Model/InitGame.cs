@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using cfg;
 using cfg.item;
 using Core;
+using Cysharp.Threading.Tasks;
+using Google.Protobuf;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -56,20 +58,34 @@ public class InitGame : MonoBehaviour
         Log.Print("=================热更流程走完=============");
         // 各种初始化
         
-        Tables tables = new Tables(loader);
-        Item item = tables.TbItem.Get(10010);
-        Debug.Log($"{item.Name}  {item.Desc}");
         
-        await AssetMgr.LoadSceneAsync(Updater.Instance.gameScene);
+        // Tables tables = new Tables(loader);
+        // Item item = tables.TbItem.Get(10010);
+        // Debug.Log($"{item.Name}  {item.Desc}");
+        //
+        //
+        // RstUserInfo rstUserInfo = new RstUserInfo();
+        // rstUserInfo.Name = "xuxianbo";
+        // rstUserInfo.Gold = 5;
+        // rstUserInfo.Position = 12;
+        // byte[] tBytes = rstUserInfo.ToByteArray();
+
+        // typeof()
+        // RstUserInfo temp = ProtobufHeler.FromBytes(typeof(RstUserInfo), tBytes, 0, tBytes.Length) as RstUserInfo;
+        
+        
+        AssetMgr.LoadScene(Updater.Instance.gameScene);
     }
 
-    private JSONNode loader(string fileName)
+    private async UniTask<JSONNode> loader(string fileName)
     {
-        string msg = AssetMgr.Load<TextAsset>(fileName).text;
+        TextAsset textAsset =await AssetMgr.LoadAsync<TextAsset>(fileName);
+        
+        // string msg = AssetMgr.Load<TextAsset>(fileName).text;
             
         // AssetOperationHandle assetOperationHandle = mian.LoadAssetAsync(mian.GetAssetInfo("fileName"));
         // string  filePath = File.ReadAllText(Application.dataPath + "/Res/Config/json/" + fileName + ".json");
-        return JSON.Parse( msg );
+        return JSON.Parse( textAsset.text );
     }
 
     // Update is called once per frame

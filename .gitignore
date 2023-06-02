@@ -24,7 +24,8 @@ ExprotAndroid/
 
 *.log
 Client/Assets/Raw.meta
-
+u3dclient/Assets/StreamingAssets/BuildinFiles
+u3dclient/Bundles
 
 YouYouServer_JAVA/
 MYSDK/
