@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using cfg;
-using cfg.item;
 using Core;
 using Cysharp.Threading.Tasks;
 using Google.Protobuf;
+using Model;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -56,25 +55,49 @@ public class InitGame : MonoBehaviour
     public async Task LoadHotUpdateCallback()
     {
         Log.Print("=================热更流程走完=============");
-        // 各种初始化
-        
-        
-        // Tables tables = new Tables(loader);
-        // Item item = tables.TbItem.Get(10010);
-        // Debug.Log($"{item.Name}  {item.Desc}");
-        //
-        //
-        // RstUserInfo rstUserInfo = new RstUserInfo();
-        // rstUserInfo.Name = "xuxianbo";
-        // rstUserInfo.Gold = 5;
-        // rstUserInfo.Position = 12;
-        // byte[] tBytes = rstUserInfo.ToByteArray();
+        ViewAssetLoader loader = new ViewAssetLoader();
 
-        // typeof()
-        // RstUserInfo temp = ProtobufHeler.FromBytes(typeof(RstUserInfo), tBytes, 0, tBytes.Length) as RstUserInfo;
+        new ConfigComponent(new ConfigComponentConfig(loader, "Model", typeof(ConfigComponent).Assembly));
+        await ConfigComponent.Instance.Load();
         
+        new LocalizeComponent(
+            new LocalizeComponentConfig(
+                loader,
+                SystemLanguage.Chinese,
+                SystemLanguage.English,
+                null
+            )
+        );
+
+        await LocalizeComponent.Instance.Load();
+
+        // 单例表
+        Debug.Log($"单例表: {GlobalConfigCategory.Single.default_icon}");
+
+        // 多主键表
+        var config = MultipleKeyConfigCategory.Instance.TryGet("First", 100, 200);
+        Debug.Log($"多主键表: {config}");
+
+        // ref 绑定
+        var ref_config = ConfigComponent.Instance.Get<SingleRefConfig>(1);
+
+        Debug.Log($"ref 绑定: {ref_config.ref_one_ref.id}");
+
+        // 本地化使用
+        var localize = LocalizeComponent.Instance.GetText("example/one");
+
+        Debug.Log($"本地化: {localize}");
+
+        await LocalizeComponent.Instance.SwitchLanguage(SystemLanguage.English);
+        // 本地化使用
+        localize = LocalizeComponent.Instance.GetText("example/one");
+
+        Debug.Log($"本地化(语言切换为英语之后): {localize}");
+
         
-        AssetMgr.LoadScene(Updater.Instance.gameScene);
+        Debug.Log($"ref 绑定: {ref_config.ref_one_ref.id}");
+        
+        await AssetMgr.LoadSceneAsync(Updater.Instance.gameScene);
     }
 
     private async UniTask<JSONNode> loader(string fileName)

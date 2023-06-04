@@ -28,6 +28,7 @@ using System;
 using YooAsset;
 using UnityEngine;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEditor;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
@@ -311,27 +312,28 @@ namespace Core
             return handle.AssetObject as T;
         }
 
-        public static async Task<T> LoadAsync<T>(string path)
-            where T : Object => await LoadAsync<T>(path, Updater.MainPackageName);
+        public static async UniTask<T> LoadAsync<T>(string path, IProgress<float> progress = null)
+            where T : Object => await LoadAsync<T>(path, Updater.MainPackageName, progress);
 
-        public static async Task<T> LoadAsync<T>(string path, string package)
+        public static async UniTask<T> LoadAsync<T>(string path, string package, IProgress<float> progress = null)
             where T : Object
         {
             var handle = GetPackage(package).LoadAssetAsync<T>(path);
-            await handle.Task;
+            await handle.ToUniTask();
+            // await handle.ToUniTask(progress);
             return handle.AssetObject as T;
         }
 
 
-        public static async Task<Object> LoadAsync(string path, Type type)
+        public static async UniTask<Object> LoadAsync(string path, Type type)
         {
             return await LoadAsync(path, Updater.MainPackageName, type);
         }
 
-        public static async Task<Object> LoadAsync(string path, string package, Type type)
+        public static async UniTask<Object> LoadAsync(string path, string package, Type type)
         {
             var handle = GetPackage(package).LoadAssetAsync(path, type);
-            await handle.Task;
+            await handle.ToUniTask();
             return handle.AssetObject;
         }
 

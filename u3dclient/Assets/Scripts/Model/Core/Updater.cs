@@ -9,7 +9,7 @@ namespace Core
         [SerializeField] [Tooltip("热更资源下载备用地址")]
         private string fallbackUrl = "http://127.0.0.1:7888/";
 
-        [SerializeField] public string gameScene = "Assets/HotUpdateResources/Main/Scene/Game.unity";
+        [SerializeField] public string gameScene = "Assets/Res/Main/Scenes/Game.unity";
         [SerializeField] private string mainPackageName = "Main";
 
         [Tooltip("Simulate是开发模式，Standalone是离线模式，Remote是真机模式")] [SerializeField]
