@@ -7,17 +7,16 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 1111test
-  m_Shader: {fileID: -6465566751694194690, guid: fbbe088ae1b9e204aafaff97a6389aa4,
+  m_Name: water
+  m_Shader: {fileID: -6465566751694194690, guid: 840d3deb1532b0445b8f99eeaf961c68,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap:
-    RenderType: Opaque
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -83,7 +82,6 @@ Material:
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
-    - _CastShadows: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -96,7 +94,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _Normal: 2.3
+    - _Normal: 3
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
@@ -108,25 +106,23 @@ Material:
     - _SrcBlend: 1
     - _Surface: 0
     - _WorkflowMode: 1
-    - _ZTest: 4
     - _ZWrite: 1
-    - _ZWriteControl: 0
-    - _mask: 1
-    - _metallc: 0.1
+    - _mask: 37.65
+    - _metallc: 2.5
     - _power: 2.31
     - _scale: 5
     - _smooth: 2
-    - _speed: 1
-    - _transparent: 3.68
-    - _transparentMask: 0.1
+    - _speed: 0.1
+    - _transparent: 0.97
+    - _transparentMask: 10.75
     m_Colors:
-    - _BaseColor: {r: 0.039215658, g: 0.8980392, b: 0.106794685, a: 1}
+    - _BaseColor: {r: 0.039215658, g: 0.8980392, b: 0.064086564, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _VoronoiColor: {r: 0, g: 3.4263432, b: 0.24641578, a: 0}
-    - _normalSpeed: {r: 0, g: 0.2, b: 0, a: 0}
-    - _uvSpeed: {r: 0, g: 0.5, b: 0, a: 0}
+    - _VoronoiColor: {r: 0, g: 3.414799, b: 0.3250565, a: 0}
+    - _normalSpeed: {r: 0, g: 0.15, b: 0, a: 0}
+    - _uvSpeed: {r: 0, g: 0.2, b: 0, a: 0}
     - _vornoiTiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2248036290619036392
